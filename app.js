@@ -1,10 +1,10 @@
 // For reference. These are the character codes if I need to use String.fromCharCode(charCode)
 // var specialCharsRange = ["33-47", "58-64", "91-96", "123-126"];
-// var numbersRange = "48-57";
+// var numericCharsRange = "48-57";
 // var uppercaseRange = "65-90";
 // var lowercaseRange = "97-122";
 
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
   "a",
   "b",
@@ -97,24 +97,55 @@ const specialChars = [
 ];
 
 var pwLength;
-var numsReq = false;
-var lowercaseReq = false;
-var uppercaseReq = false;
-var specialsReq = false;
+var numsReq;
+var lowercaseReq;
+var uppercaseReq;
+var specialsReq;
 
-function userPrompts() {
-  if (pwLength == undefined) {
-    pwLength = Number(
-      prompt(
-        "How many characters should the password be? Please choose a number between 8 and 128."
-      )
-    );
-    while (Number.isNaN(pwLength) || pwLength < 8 || pwLength > 128) {
+function getPasswordRequirements() {
+  numsReq = false;
+  lowercaseReq = false;
+  uppercaseReq = false;
+  specialsReq = false;
+
+  pwLength = getPasswordLength();
+  getCharacterTypesReq();
+
+  // Gets the requried password length by prompting the user. User must enter a valid number.
+  function getPasswordLength() {
+    if (pwLength == undefined) {
       pwLength = Number(
-        prompt(
-          "Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128."
-        )
+        prompt("How many characters should the password be? Please choose a number between 8 and 128.")
       );
+      while (Number.isNaN(pwLength) || pwLength < 8 || pwLength > 128) {
+        pwLength = Number(
+          prompt("Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128.")
+        );
+      }
+    }
+  }
+
+  // Gets the character types required in the password by prompting the user. User must select at least one.
+  function getCharacterTypesReq() {
+    alert(
+      "Select the character types to be included in the password in the following prompts (must select at least one)."
+    );
+
+    while (
+      numsReq == false && lowercaseReq == false &&
+      uppercaseReq == false && specialsReq == false
+    ) {
+      numsReq = confirm("Should the password contain numbers?");
+      lowercaseReq = confirm("Should the password contain lowercase characters?");
+      uppercaseReq = confirm("Should the password contain uppercase characters?");
+      specialsReq = confirm("Should the password contain special characters?");
+
+      if (
+        numsReq == false && lowercaseReq == false &&
+        uppercaseReq == false && specialsReq == false
+      ) {
+        alert("Please select at least one character type to be used in the password");
+      }
     }
   }
 }
@@ -123,7 +154,7 @@ function userPrompts() {
 function generateCharSet() {
   let charSet = [];
   if (numsReq) {
-    charSet.push(...numbers);
+    charSet.push(...numericChars);
   }
   if (lowercaseReq) {
     charSet.push(...lowercaseChars);
