@@ -4,6 +4,16 @@
 // var uppercaseRange = "65-90";
 // var lowercaseRange = "97-122";
 
+window.addEventListener('load', getPasswordRequirements);
+displayPasswordToTextArea();
+
+const generateButton = document.getElementById("generate");
+generateButton.addEventListener("click", displayPasswordToTextArea);
+
+document.getElementById("copy").addEventListener("click", copyPassword);
+
+
+
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
   "a",
@@ -101,17 +111,23 @@ var numsReq;
 var lowercaseReq;
 var uppercaseReq;
 var specialsReq;
-var charSet = [];
+var charSet;
 
 function getPasswordRequirements() {
+  // Reset requirements
   numsReq = false;
   lowercaseReq = false;
   uppercaseReq = false;
   specialsReq = false;
+  charSet = [];
 
+  // Get the requirements.
   getPasswordLength();
   getCharacterTypesReq();
   charSet = generateCharSet();
+
+  // Display the password immediately after getting requirements.
+  displayPasswordToTextArea();
 
   // Gets the requried password length by prompting the user. User must enter a valid number.
   function getPasswordLength() {
@@ -188,8 +204,11 @@ function displayPasswordToTextArea() {
   passwordTextArea.innerHTML = generatedPassword;
 }
 
-window.addEventListener('load', getPasswordRequirements());
+function copyPassword() {
+  var copyText = document.getElementById("password");
 
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
 
-const generateButton = document.getElementById("generate");
-generateButton.addEventListener("click", displayPasswordToTextArea)
+  document.execCommand("copy");
+}
