@@ -101,6 +101,7 @@ var numsReq;
 var lowercaseReq;
 var uppercaseReq;
 var specialsReq;
+var charSet = [];
 
 function getPasswordRequirements() {
   numsReq = false;
@@ -108,8 +109,9 @@ function getPasswordRequirements() {
   uppercaseReq = false;
   specialsReq = false;
 
-  pwLength = getPasswordLength();
+  getPasswordLength();
   getCharacterTypesReq();
+  charSet = generateCharSet();
 
   // Gets the requried password length by prompting the user. User must enter a valid number.
   function getPasswordLength() {
@@ -168,10 +170,9 @@ function generateCharSet() {
   return charSet;
 }
 
-var charSet = generateCharSet();
 
 // Returns a string of random characters of a given length.
-function generateRandomPassword(pwLength) {
+function generateRandomPassword() {
   let generatedPassword = "";
   let randomNumber;
   for (let i = 0; i < pwLength; i++) {
@@ -180,3 +181,15 @@ function generateRandomPassword(pwLength) {
   }
   return generatedPassword;
 }
+
+function displayPasswordToTextArea() {
+  const passwordTextArea = document.getElementById("password");
+  const generatedPassword = generateRandomPassword();
+  passwordTextArea.innerHTML = generatedPassword;
+}
+
+window.addEventListener('load', getPasswordRequirements());
+
+
+const generateButton = document.getElementById("generate");
+generateButton.addEventListener("click", displayPasswordToTextArea)
