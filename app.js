@@ -4,15 +4,13 @@
 // var uppercaseRange = "65-90";
 // var lowercaseRange = "97-122";
 
-window.addEventListener('load', getPasswordRequirements);
+window.addEventListener("load", getPasswordRequirements);
 displayPasswordToTextArea();
 
 const generateButton = document.getElementById("generate");
 generateButton.addEventListener("click", displayPasswordToTextArea);
 
 document.getElementById("copy").addEventListener("click", copyPassword);
-
-
 
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
@@ -133,11 +131,15 @@ function getPasswordRequirements() {
   function getPasswordLength() {
     if (pwLength == undefined) {
       pwLength = Number(
-        prompt("How many characters should the password be? Please choose a number between 8 and 128.")
+        prompt(
+          "How many characters should the password be? Please choose a number between 8 and 128."
+        )
       );
       while (Number.isNaN(pwLength) || pwLength < 8 || pwLength > 128) {
         pwLength = Number(
-          prompt("Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128.")
+          prompt(
+            "Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128."
+          )
         );
       }
     }
@@ -150,19 +152,29 @@ function getPasswordRequirements() {
     );
 
     while (
-      numsReq == false && lowercaseReq == false &&
-      uppercaseReq == false && specialsReq == false
+      numsReq == false &&
+      lowercaseReq == false &&
+      uppercaseReq == false &&
+      specialsReq == false
     ) {
       numsReq = confirm("Should the password contain numbers?");
-      lowercaseReq = confirm("Should the password contain lowercase characters?");
-      uppercaseReq = confirm("Should the password contain uppercase characters?");
+      lowercaseReq = confirm(
+        "Should the password contain lowercase characters?"
+      );
+      uppercaseReq = confirm(
+        "Should the password contain uppercase characters?"
+      );
       specialsReq = confirm("Should the password contain special characters?");
 
       if (
-        numsReq == false && lowercaseReq == false &&
-        uppercaseReq == false && specialsReq == false
+        numsReq == false &&
+        lowercaseReq == false &&
+        uppercaseReq == false &&
+        specialsReq == false
       ) {
-        alert("Please select at least one character type to be used in the password");
+        alert(
+          "Please select at least one character type to be used in the password"
+        );
       }
     }
   }
@@ -185,7 +197,6 @@ function generateCharSet() {
   }
   return charSet;
 }
-
 
 // Returns a string of random characters of a given length.
 function generateRandomPassword() {
