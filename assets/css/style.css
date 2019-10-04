@@ -10,7 +10,8 @@ body {
 
 .generate-btn,
 .copy-btn,
-.reset-btn {
+.reset-btn,
+.show-options-btn {
   border: 1px solid black;
   border-radius: 20px;
   background-color: orangered;

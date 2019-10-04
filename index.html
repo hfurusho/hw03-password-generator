@@ -48,20 +48,103 @@
             Generate Password
           </button>
         </div>
-        <div class="col-auto ">
+        <div class="col-auto">
           <button class="btn btn-block copy-btn" id="copy">
             Copy to Clipboard
           </button>
         </div>
-        <div class="col-auto ">
+        <div class="col-auto">
           <button class="btn btn-block reset-btn" id="reset">
             Reset Password Criteria
           </button>
         </div>
+        <div class="col-auto">
+          <button
+            class="btn btn-block show-options-btn"
+            type="button"
+            id="options"
+            data-toggle="collapse"
+            data-target="#options-area"
+          >
+            Show Options
+          </button>
+        </div>
+      </div>
+      <div class="row options" id="options-area">
+        <!-- Add collapse class! -->
+        <div class="card card-body">
+          <form class="row">
+            <div class="col-6">
+              <label for="formControlRange">Password Length</label>
+              <input
+                type="range"
+                class="form-control-range custom-range"
+                id="pw-length-range"
+                min="8"
+                max="128"
+                step="1"
+              />
+              <input
+                type="number"
+                class="form-control"
+                id="pw-length-textbox"
+                min="8"
+                max="128"
+                step="1"
+              />
+            </div>
+            <div class="col-6 text-left">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="numeric-chars-checkbox"
+                />
+                <label class="form-check-label" for="numericCharsCheck">
+                  Numeric Characters
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="lowercase-chars-checkbox"
+                />
+                <label class="form-check-label" for="lowercase-chars-checkbox">
+                  Lowercase Characters
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="uppercase-chars-checkbox"
+                />
+                <label class="form-check-label" for="uppercase-chars-checkbox">
+                  Uppercase Characters
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="special-chars-checkbox"
+                />
+                <label class="form-check-label" for="special-chars-checkbox">
+                  Special Characters
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
-    <script src="./app.js"></script>
+    <!-- <script src="./app.js"></script> -->
 
     <!-- Bootstrap JS dependencies -->
     <script
