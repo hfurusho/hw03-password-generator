@@ -12,6 +12,8 @@ generateButton.addEventListener("click", displayPasswordToTextArea);
 
 document.getElementById("copy").addEventListener("click", copyPassword);
 
+document.getElementById("reset").addEventListener("click", getPasswordRequirements)
+
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
   "a",
@@ -113,6 +115,7 @@ var charSet;
 
 function getPasswordRequirements() {
   // Reset requirements
+  pwLength = null;
   numsReq = false;
   lowercaseReq = false;
   uppercaseReq = false;
