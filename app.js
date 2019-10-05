@@ -5,14 +5,52 @@
 // var lowercaseRange = "97-122";
 
 window.addEventListener("load", getPasswordRequirements);
-displayPasswordToTextArea();
 
 const generateButton = document.getElementById("generate");
 generateButton.addEventListener("click", displayPasswordToTextArea);
 
 document.getElementById("copy").addEventListener("click", copyPassword);
+document.getElementById("reset").addEventListener("click", getPasswordRequirements);
 
-document.getElementById("reset").addEventListener("click", getPasswordRequirements)
+document.getElementById("pw-length-range").addEventListener("input", updatePwLength);
+document.getElementById("pw-length-textbox").addEventListener("input", updatePwLength);
+
+document.getElementById("character-options").addEventListener("input", updateCharReqs);
+
+function updateCharReqs() {
+  let checkBoxId = event.target.id;
+
+  if (checkBoxId == "numeric-chars-checkbox") {
+    numsReq = event.target.checked;
+  } else if (checkBoxId == "lowercase-chars-checkbox") {
+    lowercaseReq = event.target.checked;
+  } else if (checkBoxId == "uppercase-chars-checkbox") {
+    uppercaseReq = event.target.checked;
+  } else {
+    specialsReq = event.target.checked;
+  }
+
+  charSet = generateCharSet()
+  displayPasswordToTextArea()
+  
+}
+
+// Changes the password length based on the input from either the input range form 
+// or the input number form, updates the other, and displays a new password.
+function updatePwLength() {
+  let targetType = event.target.type;
+  pwLength = event.target.value;
+  
+  if (targetType == "range") {
+    document.getElementById("pw-length-textbox").value = pwLength;
+  }  else {
+    document.getElementById("pw-length-range").value = pwLength;
+  }
+
+  displayPasswordToTextArea();
+}
+
+
 
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
@@ -113,6 +151,7 @@ var uppercaseReq;
 var specialsReq;
 var charSet;
 
+// Sets initial password requirements to null/false and prompts the user. Initializes the options area.
 function getPasswordRequirements() {
   // Reset requirements
   pwLength = null;
@@ -129,6 +168,14 @@ function getPasswordRequirements() {
 
   // Display the password immediately after getting requirements.
   displayPasswordToTextArea();
+
+  // Set options initial settings
+  document.getElementById("pw-length-range").value = pwLength;
+  document.getElementById("pw-length-textbox").value = pwLength;
+  document.getElementById("numeric-chars-checkbox").checked = numsReq;
+  document.getElementById("lowercase-chars-checkbox").checked = lowercaseReq;
+  document.getElementById("uppercase-chars-checkbox").checked = uppercaseReq;
+  document.getElementById("special-chars-checkbox").checked = specialsReq;
 
   // Gets the requried password length by prompting the user. User must enter a valid number.
   function getPasswordLength() {
@@ -212,12 +259,19 @@ function generateRandomPassword() {
   return generatedPassword;
 }
 
+// Calls generateRandomPassword() and displays to textarea
 function displayPasswordToTextArea() {
   const passwordTextArea = document.getElementById("password");
-  const generatedPassword = generateRandomPassword();
-  passwordTextArea.innerHTML = generatedPassword;
+
+  if (charSet.length == 0 || charSet == undefined) {
+    passwordTextArea.innerHTML = "Please select at least one character type requirement."
+  } else {
+    const generatedPassword = generateRandomPassword();
+    passwordTextArea.innerHTML = generatedPassword;
+  }
 }
 
+// Copies password to the clipboard. For the copy button.
 function copyPassword() {
   var copyText = document.getElementById("password");
 
