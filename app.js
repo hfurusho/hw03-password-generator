@@ -10,12 +10,34 @@ const generateButton = document.getElementById("generate");
 generateButton.addEventListener("click", displayPasswordToTextArea);
 
 document.getElementById("copy").addEventListener("click", copyPassword);
-document.getElementById("reset").addEventListener("click", getPasswordRequirements);
+document
+  .getElementById("reset")
+  .addEventListener("click", getPasswordRequirements);
 
-document.getElementById("pw-length-range").addEventListener("input", updatePwLength);
-document.getElementById("pw-length-textbox").addEventListener("input", updatePwLength);
+const optionsButton = document.getElementById("options");
 
-document.getElementById("character-options").addEventListener("input", updateCharReqs);
+optionsButton.addEventListener("click", function() {
+  let optionsAreaState = document.getElementById("options-area").getAttribute("state");
+  if (optionsAreaState === "collapsed") {
+    console.log("a")
+    optionsButton.innerHTML = "Hide Options";
+    document.getElementById("options-area").setAttribute("state", "shown");
+  } else {
+    optionsButton.innerHTML = "Show Options";
+    document.getElementById("options-area").setAttribute("state", "collapsed");
+  }
+});
+
+document
+  .getElementById("pw-length-range")
+  .addEventListener("input", updatePwLength);
+document
+  .getElementById("pw-length-textbox")
+  .addEventListener("input", updatePwLength);
+
+document
+  .getElementById("character-options")
+  .addEventListener("input", updateCharReqs);
 
 function updateCharReqs() {
   let checkBoxId = event.target.id;
@@ -30,27 +52,24 @@ function updateCharReqs() {
     specialsReq = event.target.checked;
   }
 
-  charSet = generateCharSet()
-  displayPasswordToTextArea()
-  
+  charSet = generateCharSet();
+  displayPasswordToTextArea();
 }
 
-// Changes the password length based on the input from either the input range form 
+// Changes the password length based on the input from either the input range form
 // or the input number form, updates the other, and displays a new password.
 function updatePwLength() {
   let targetType = event.target.type;
   pwLength = event.target.value;
-  
+
   if (targetType == "range") {
     document.getElementById("pw-length-textbox").value = pwLength;
-  }  else {
+  } else {
     document.getElementById("pw-length-range").value = pwLength;
   }
 
   displayPasswordToTextArea();
 }
-
-
 
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const lowercaseChars = [
@@ -264,7 +283,8 @@ function displayPasswordToTextArea() {
   const passwordTextArea = document.getElementById("password");
 
   if (charSet.length == 0 || charSet == undefined) {
-    passwordTextArea.innerHTML = "Please select at least one character type requirement."
+    passwordTextArea.innerHTML =
+      "Please select at least one character type requirement.";
   } else {
     const generatedPassword = generateRandomPassword();
     passwordTextArea.innerHTML = generatedPassword;
