@@ -1,1 +1,3 @@
 # hw03-password-generator
+
+This application will generate a random password. Upon loading, the user will be prompted with questions asking about the password requirements which includes: the length, numeric characters, lowercase character, uppercase characters, and special characters. A random password will then appear in the textbox. The user can then choose to copy the password, generate another one, or reset the password requirements. Resetting the password requirements will bring up prompts for the user. There is also a button to show the options in a box below. The user can then change the password length via the slider or input textbox and check the boxes for the character types.
