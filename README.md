@@ -20,6 +20,7 @@ A random password will then appear in the textbox. The user can then choose to c
 
 - Check the password to insure that at least one character of each character type chosen is included in the password.
 - Option to not allow (or limit) repeated characters.
+- Add better indicator when no character types are selected.
 
 ## Technologies Used
 
@@ -27,4 +28,4 @@ This application was built with basic html, css, and javascript. Bootstrap was a
 
 ## Homework Notes
 
-I didn't like the idea that the user was prompted for password requirements and so I implemented the options area. This gave me more practice with working with event listeners and also with bootstrap. I kept the prompts in just for the sake of it. In addition, I added the option to reset the password requirements without having to reload that page.
+I didn't like the idea that the user was prompted for password requirements and so I implemented the options area. This gave me more practice with working with event listeners and also with bootstrap. I kept the prompts in just for the sake of it. In addition, I added the option to reset the password requirements without having to reload the page.
