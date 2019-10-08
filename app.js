@@ -1,167 +1,42 @@
-// For reference. These are the character codes if I need to use String.fromCharCode(charCode)
-// var specialCharsRange = ["33-47", "58-64", "91-96", "123-126"];
-// var numericCharsRange = "48-57";
-// var uppercaseRange = "65-90";
-// var lowercaseRange = "97-122";
-
 window.addEventListener("load", getPasswordRequirements);
 
-const generateButton = document.getElementById("generate");
-generateButton.addEventListener("click", displayPasswordToTextArea);
+(function attachEventListenersToButtons() {
 
-document.getElementById("copy").addEventListener("click", copyPassword);
-document
-  .getElementById("reset")
-  .addEventListener("click", getPasswordRequirements);
+  document.getElementById("generate").addEventListener("click", displayPasswordToTextArea);
+  document.getElementById("copy").addEventListener("click", copyPassword);
+  document.getElementById("reset").addEventListener("click", getPasswordRequirements);
 
-const optionsButton = document.getElementById("options");
+  const optionsButton = document.getElementById("options");
 
-optionsButton.addEventListener("click", function() {
-  let optionsAreaState = document.getElementById("options-area").getAttribute("state");
-  if (optionsAreaState === "collapsed") {
-    console.log("a")
-    optionsButton.innerHTML = "Hide Options";
-    document.getElementById("options-area").setAttribute("state", "shown");
-  } else {
-    optionsButton.innerHTML = "Show Options";
-    document.getElementById("options-area").setAttribute("state", "collapsed");
-  }
-});
+  optionsButton.addEventListener("click", function() {
+    let optionsAreaState = document.getElementById("options-area").getAttribute("state");
+    if (optionsAreaState === "collapsed") {
+      console.log("a")
+      optionsButton.innerHTML = "Hide Options";
+      document.getElementById("options-area").setAttribute("state", "shown");
+    } else {
+      optionsButton.innerHTML = "Show Options";
+      document.getElementById("options-area").setAttribute("state", "collapsed");
+    }
+  });
 
-document
-  .getElementById("pw-length-range")
-  .addEventListener("input", updatePwLength);
-document
-  .getElementById("pw-length-textbox")
-  .addEventListener("input", updatePwLength);
+  document.getElementById("pw-length-range").addEventListener("input", updatePwLength);
+  document.getElementById("pw-length-textbox").addEventListener("input", updatePwLength);
 
-document
-  .getElementById("character-options")
-  .addEventListener("input", updateCharReqs);
+  document.getElementById("character-options").addEventListener("input", updateCharReqs);
+})();
 
-function updateCharReqs() {
-  let checkBoxId = event.target.id;
-
-  if (checkBoxId == "numeric-chars-checkbox") {
-    numsReq = event.target.checked;
-  } else if (checkBoxId == "lowercase-chars-checkbox") {
-    lowercaseReq = event.target.checked;
-  } else if (checkBoxId == "uppercase-chars-checkbox") {
-    uppercaseReq = event.target.checked;
-  } else {
-    specialsReq = event.target.checked;
-  }
-
-  charSet = generateCharSet();
-  displayPasswordToTextArea();
-}
-
-// Changes the password length based on the input from either the input range form
-// or the input number form, updates the other, and displays a new password.
-function updatePwLength() {
-  let targetType = event.target.type;
-  pwLength = event.target.value;
-
-  if (targetType == "range") {
-    document.getElementById("pw-length-textbox").value = pwLength;
-  } else {
-    document.getElementById("pw-length-range").value = pwLength;
-  }
-
-  displayPasswordToTextArea();
-}
 
 const numericChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const lowercaseChars = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z"
-];
-const uppercaseChars = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z"
-];
-const specialChars = [
-  "!",
-  '"',
-  "#",
-  "$",
-  "%",
-  "&",
-  "'",
-  "(",
-  ")",
-  "*",
-  "+",
-  ",",
-  "-",
-  ".",
-  "/",
-  ":",
-  ";",
-  "<",
-  "=",
-  ">",
-  "?",
-  "@",
-  "[",
-  "\\",
-  "]",
-  "^",
-  "_",
-  "`",
-  "{",
-  "|",
-  "}",
-  "~"
-];
+
+const lowercaseChars = ["a","b","c","d","e","f","g","h","i","j","k","l","m",
+                        "n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+const uppercaseChars = ["A","B","C","D","E","F","G","H","I","J","K","L","M",
+                        "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+
+const specialChars = ["!",'"',"#","$","%","&","'","(",")","*","+",",","-",".","/",":",
+                      ";","<","=",">","?","@","[","\\","]","^","","`","{","|","}","~"];
 
 var pwLength;
 var numsReq;
@@ -180,7 +55,7 @@ function getPasswordRequirements() {
   specialsReq = false;
   charSet = [];
 
-  // Get the requirements.
+  // Get the requirements via prompts.
   getPasswordLength();
   getCharacterTypesReq();
   charSet = generateCharSet();
@@ -188,7 +63,7 @@ function getPasswordRequirements() {
   // Display the password immediately after getting requirements.
   displayPasswordToTextArea();
 
-  // Set options initial settings
+  // Set options area initial settings (after prompts);
   document.getElementById("pw-length-range").value = pwLength;
   document.getElementById("pw-length-textbox").value = pwLength;
   document.getElementById("numeric-chars-checkbox").checked = numsReq;
@@ -200,16 +75,9 @@ function getPasswordRequirements() {
   function getPasswordLength() {
     if (pwLength == undefined) {
       pwLength = Number(
-        prompt(
-          "How many characters should the password be? Please choose a number between 8 and 128."
-        )
-      );
+        prompt("How many characters should the password be? Please choose a number between 8 and 128."));
       while (Number.isNaN(pwLength) || pwLength < 8 || pwLength > 128) {
-        pwLength = Number(
-          prompt(
-            "Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128."
-          )
-        );
+        pwLength = Number(prompt("Please enter a valid number. How many characters should the password be? Choose a number between 8 and 128."));
       }
     }
   }
@@ -299,4 +167,38 @@ function copyPassword() {
   copyText.setSelectionRange(0, 99999); /*For mobile devices*/
 
   document.execCommand("copy");
+}
+
+// Changes the character types that the password generator can choose from after checking the corresponding checkbox in
+// the options area.
+function updateCharReqs() {
+  let checkBoxId = event.target.id;
+
+  if (checkBoxId == "numeric-chars-checkbox") {
+    numsReq = event.target.checked;
+  } else if (checkBoxId == "lowercase-chars-checkbox") {
+    lowercaseReq = event.target.checked;
+  } else if (checkBoxId == "uppercase-chars-checkbox") {
+    uppercaseReq = event.target.checked;
+  } else {
+    specialsReq = event.target.checked;
+  }
+
+  charSet = generateCharSet();
+  displayPasswordToTextArea();
+}
+
+// Changes the password length based on the input from either the input range form
+// or the input number form, updates the other, and displays a new password.
+function updatePwLength() {
+  let targetType = event.target.type;
+  pwLength = event.target.value;
+
+  if (targetType == "range") {
+    document.getElementById("pw-length-textbox").value = pwLength;
+  } else {
+    document.getElementById("pw-length-range").value = pwLength;
+  }
+
+  displayPasswordToTextArea();
 }
